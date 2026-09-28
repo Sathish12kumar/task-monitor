@@ -73,7 +73,10 @@ export const QuickTaskBar: React.FC<QuickTaskBarProps> = ({
     }
 
     const assignedProjectId = activeProjectId !== 'all' ? activeProjectId : (projects[0]?.id || '');
-    if (!assignedProjectId) return;
+    if (!assignedProjectId) {
+      setErrorMsg('Please create a project first before logging tasks.');
+      return;
+    }
 
     const initialStartTime = startTime || getCurrentTimeString();
 

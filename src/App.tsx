@@ -109,23 +109,23 @@ export function App() {
     saveTasks(tasks);
   }, [tasks]);
 
-  useEffect(() => {
-    if (activeProjectId !== 'all' && !projects.some((p) => p.id === activeProjectId)) {
-      setActiveProjectId('all');
-    }
+  // Derive effective project ID without triggering cascading renders via setState in effect
+  const effectiveActiveProjectId = useMemo(() => {
+    if (activeProjectId === 'all') return 'all';
+    return projects.some((p) => p.id === activeProjectId) ? activeProjectId : 'all';
   }, [projects, activeProjectId]);
 
   const activeProject = useMemo(() => {
-    if (activeProjectId === 'all') return undefined;
-    return projects.find((p) => p.id === activeProjectId);
-  }, [projects, activeProjectId]);
+    if (effectiveActiveProjectId === 'all') return undefined;
+    return projects.find((p) => p.id === effectiveActiveProjectId);
+  }, [projects, effectiveActiveProjectId]);
 
   const scopedTasks = useMemo(() => {
-    if (activeProjectId === 'all') {
+    if (effectiveActiveProjectId === 'all') {
       return tasks;
     }
-    return tasks.filter((t) => t.projectId === activeProjectId);
-  }, [tasks, activeProjectId]);
+    return tasks.filter((t) => t.projectId === effectiveActiveProjectId);
+  }, [tasks, effectiveActiveProjectId]);
 
   // Filtered & Sorted tasks
   const { activeTasks, completedTasks, hasMatches } = useMemo(() => {
@@ -296,6 +296,11 @@ export function App() {
   };
 
   const handleOpenNewTask = () => {
+    if (projects.length === 0) {
+      setIsProjectModalOpen(true);
+      addToast('Create Project First', 'Please create a project first to assign tasks to.', 'info');
+      return;
+    }
     setEditingTask(null);
     setIsTaskModalOpen(true);
   };
@@ -510,10 +515,17 @@ export function App() {
                 onActionClick={handleOpenNewTask}
                 onClearSearch={() => setSearchQuery('')}
               />
+            ) : projects.length === 0 ? (
+              <EmptyState
+                type="no-projects"
+                onActionClick={handleOpenNewProject}
+              />
             ) : (
               <EmptyState
-                type="no-tasks"
+                type={searchQuery.trim() ? 'no-results' : 'no-tasks'}
+                searchQuery={searchQuery}
                 onActionClick={handleOpenNewTask}
+                onClearSearch={() => setSearchQuery('')}
               />
             )}
           </div>

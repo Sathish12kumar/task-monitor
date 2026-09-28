@@ -1,8 +1,8 @@
 import React from 'react';
-import { ClipboardList, Plus, SearchX, Sparkles } from 'lucide-react';
+import { ClipboardList, Plus, SearchX, Sparkles, FolderPlus } from 'lucide-react';
 
 interface EmptyStateProps {
-  type: 'no-tasks' | 'no-results' | 'no-filter-match';
+  type: 'no-tasks' | 'no-results' | 'no-filter-match' | 'no-projects';
   filterName?: string;
   searchQuery?: string;
   onActionClick: () => void;
@@ -16,6 +16,24 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   onActionClick,
   onClearSearch,
 }) => {
+  if (type === 'no-projects') {
+    return (
+      <div className="empty-state-card">
+        <div className="empty-icon-bubble">
+          <FolderPlus size={26} />
+        </div>
+        <h3 className="empty-title">No projects yet</h3>
+        <p className="empty-subtitle">
+          Create your first project to start organizing tasks, shifts, and daily work sessions.
+        </p>
+        <button type="button" className="shadcn-btn shadcn-btn-primary" onClick={onActionClick}>
+          <Plus size={15} />
+          <span>Create First Project</span>
+        </button>
+      </div>
+    );
+  }
+
   if (type === 'no-results') {
     return (
       <div className="empty-state-card">

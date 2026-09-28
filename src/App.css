@@ -386,8 +386,41 @@
   background-color: var(--muted);
 }
 
-.project-menu-btn.delete-proj:hover {
-  color: var(--destructive);
+.sidebar-empty-state {
+  padding: 1.25rem 0.75rem;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  background-color: var(--card);
+}
+
+.sidebar-empty-hint {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.sidebar-empty-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius);
+  color: var(--primary);
+  background-color: var(--accent);
+  border: 1px solid var(--border);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.sidebar-empty-create-btn:hover {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .sidebar-footer {

@@ -174,8 +174,8 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
   return (
     <>
       <div className="modal-backdrop" onClick={onClose} onKeyDown={handleKeyDown}>
-        <div 
-          className="shadcn-dialog modal-multi-session" 
+        <div
+          className="shadcn-dialog modal-multi-session"
           onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
@@ -186,9 +186,9 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
               <h2 id="task-dialog-title">{initialTask ? 'Edit Task Sessions' : 'New Task with Sessions'}</h2>
               <p className="dialog-desc">Type or search times & add session notes (e.g. 10am-1pm & 2pm-6pm)</p>
             </div>
-            <button 
-              type="button" 
-              className="dialog-close-btn" 
+            <button
+              type="button"
+              className="dialog-close-btn"
               onClick={onClose}
               aria-label="Close dialog"
             >
@@ -338,8 +338,8 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
               <button type="button" className="shadcn-btn shadcn-btn-outline" onClick={onClose}>
                 Cancel
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={!!runningTask}
                 className={`shadcn-btn shadcn-btn-primary ${runningTask ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
